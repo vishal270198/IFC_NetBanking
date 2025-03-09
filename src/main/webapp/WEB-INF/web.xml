@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" id="WebApp_ID" version="4.0">
+  <display-name>IFCNetBanking</display-name>
+  <welcome-file-list>
+    <welcome-file>Home.jsp</welcome-file>
+     </welcome-file-list>
+   
+   
+   
+     <context-param> 
+   <param-name>driver</param-name>
+   <param-value>com.mysql.cj.jdbc.Driver</param-value> 
+   </context-param>
+   
+   
+    <context-param> 
+   <param-name>url</param-name>
+   <param-value>jdbc:mysql://localhost:3307/ifc_netbanking</param-value> 
+   </context-param>
+   
+   
+    <context-param> 
+   <param-name>username</param-name>
+   <param-value>root</param-value> 
+   </context-param>
+   
+   
+    <context-param> 
+   <param-name>password</param-name>
+   <param-value>vishal270198</param-value> 
+   </context-param>
+   
+   
+   <servlet>
+   <servlet-name>lag</servlet-name>
+   <servlet-class>com.servletController.LoginVerification</servlet-class>
+   </servlet>
+   
+   <servlet-mapping>
+   <servlet-name>lag</servlet-name>
+   <url-pattern>/Login</url-pattern>
+   </servlet-mapping>
+   
+   
+  <servlet>
+   <servlet-name>controller</servlet-name>
+  <servlet-class>com.BankController.ServiceController</servlet-class>
+  
+  
+  <init-param>
+  <param-name>bClass</param-name>
+  <param-value>BlogicImplement.AccountServiceImple</param-value>
+  </init-param>
+  
+  
+  <init-param>
+  <param-name>DAOClass</param-name>
+  <param-value> daoImpli.AccountDaoImp</param-value>
+  </init-param>
+  
+  
+  </servlet>
+   
+   <servlet-mapping>
+   <servlet-name>controller</servlet-name>
+   <url-pattern>/Servic</url-pattern>
+   </servlet-mapping>
+   
+
+</web-app>
