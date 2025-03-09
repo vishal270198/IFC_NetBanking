@@ -176,7 +176,7 @@ public class AccountServiceImple implements AccountService
 	    // Find the account by matching the provided account number
 	    if(acc.getAccNo() == accNo) 
 	    {
-	        // Check if the account has a balance
+	        // Check if the account has a balance , 
 	        if(acc.getAccBal() > 0) 
 	        {
 	            System.out.println("Account has a balance. Please withdraw all funds before closing.");
