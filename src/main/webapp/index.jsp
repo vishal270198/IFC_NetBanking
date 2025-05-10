@@ -5,14 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Banking Dashboard</title>
     <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background: url('https://source.unsplash.com/1600x900/?banking,finance') no-repeat center center fixed;
-            background-size: cover;
-            color: white;
-            text-align: center;
-            padding-top: 70px;
-        }
+       body {
+    font-family: 'Arial', sans-serif;
+    background: url('https://cdn.hdbank.com.vn/hdbank-file/news/editor/GnKBFVgMajHgLtaMq3jN20230208155418/digitalbankinglagi2_1675846695356.webp') no-repeat center center fixed;
+    background-size: cover;
+    color: white;
+    text-align: center;
+    padding-top: 70px;
+}
+
         .header {
             position: fixed;
             top: 0;
