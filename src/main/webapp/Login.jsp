@@ -1,144 +1,140 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-
-<script type="text/javascript">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Banking Login Page</title>
+<style>
+  body {
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: url('https://ca.statebank/documents/9125897/29518930/SBICanada_WebsiteBanner_N2C_Feb2025.jpg/3d9b79ae-4876-a18f-f7b0-571de54f4bb4?t=1740687811504') no-repeat center center fixed;
+    background-size: cover;
+    color: white;
+  }
+  .box {
+    width: 350px;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px rgba(255,255,255,0.2);
+    text-align: center;
+  }
+  input {
+    width: 90%;
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  .error {
+    color: red;
+    font-size: 14px;
+  }
+  button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 15px;
+    border: none;
+    background: #f39c12;
+    color: red;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  #datetime {
+    margin-bottom: 20px;
+    font-weight: bold;
+    font-size: 18px;
+  }
+  .advertisement {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 10px;
+    border-radius: 5px;
+    color: black;
+    font-size: 14px;
+  }
+  .rbi-rules {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 10px;
+    border-radius: 5px;
+    color: black;
+    font-size: 14px;
+  }
+</style>
+<script>
+function updateDateTime() {
+    let now = new Date();
+    document.getElementById("datetime").innerHTML = now.toLocaleString();
+}
+setInterval(updateDateTime, 1000);
 
 function validateName() {
-    var fullname = document.getElementById("uname").value;
-    if (fullname.trim().length == 0) {
-        document.getElementById("fullnameerror").innerHTML = "Please enter full name";
-        return false;
+    let username = document.getElementById("username").value.trim();
+    if (username === "") {
+        document.getElementById("fullnameerror").innerText = "Please enter full name";
     } else {
-        document.getElementById("fullnameerror").innerHTML = "";
-        return true;
+        document.getElementById("fullnameerror").innerText = "";
     }
 }
 
 function validatePassword() {
-    var password = document.getElementById("password").value;
-    if (password.trim().length == 0) {
-        document.getElementById("passworderror").innerHTML = "Please Enter Password";
-        return false;
-    }
-    if (password.length < 10) {
-        document.getElementById("passworderror").innerHTML = "Password must be more than 10 degit";
-        return false;
-    }
-    else if (!password.includes('@')) {
-        document.getElementById("passworderror").innerHTML = "Please check @ in your Password";
-        return false;
+    let password = document.getElementById("password").value.trim();
+    if (password === "") {
+        document.getElementById("passworderror").innerText = "Please enter password";
+    } else if (password.length < 10 || !password.includes('@')) {
+        document.getElementById("passworderror").innerText = "Password must be at least 10 characters & contain '@'";
     } else {
-        document.getElementById("passworderror").innerHTML = "";
-        return true;
+        document.getElementById("passworderror").innerText = "";
     }
 }
 
-function validate() {
-    if (validateName() && validatePassword()) {
-        return true; // Allow form submission
-    }
-    return false; // Prevent form submission
+function validateForm() {
+    validateName();
+    validatePassword();
+    return document.getElementById("fullnameerror").innerText === "" && document.getElementById("passworderror").innerText === "";
 }
-
 </script>
-
-<style>
-
-  .box {
-      width: 200px;
-      height: 300px;
-      border: 4px solid #000;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-evenly; /* Evenly space the content inside */
-      align-items: center; /* Center align the children horizontally */
-      border-radius: 20px;
-      margin: 0 auto;
-      padding:14px; /* Add some padding inside the box */
-    }
-
-    .data {
-      width: 100%; /* Make the input fields take full width of the container */
-      display: flex;
-      flex-direction: column;
-      align-items: center; /* Center-align text and inputs */
-      gap: 10px; /* Adds consistent spacing between the inputs */
-    }
-
-    input[type="text"], input[type="password"] {
-      width: 80%; /* Adjust input width */
-      padding: 5px;
-      font-size: 12px;
-      border-radius: 10px;
-      border: 1px solid #ccc;
-      box-sizing: border-box; /* Ensures padding doesn't mess with width */
-    }
-
-    .input {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap:7px; /* Adds some space between buttons */
-    }
-
-    input[type="submit"], input[type="button"] {
-      padding: 7px 10px;
-      font-size: 12px;
-      border-radius: 10px;
-      border: none;
-      background-color: #4CAF50;
-      color: white;
-      cursor: pointer;
-    }
-
-    input[type="button"] {
-      background-color: #008CBA; /* Different color for the signup button */
-    }
-
-</style>
-
-
-
 </head>
 <body>
-
-
- <form action="Login" method="POST">
+    <div id="datetime"></div>
     <div class="box">
-
-      <div class="data">
-        UserName: <input type="text" id="username" name="username" onblur="validateName()"/><br>
-        <span id="fullnameerror"></span><br><br>
-        
-        
-        Password: <input type="password" id="password" name="password" onblur="validatePassword()"/><br>
-        <span id="passworderror"></span><br><br>
-     
-      </div>
-
-      <div class="input">
-      <input type="text" name="old"><br>
-      <input type="text"  id="old" name="old" />
-        <input type="submit" name="submit" /><br>
-        
-      </div>
-              
+        <h2>Banking Login</h2>
+       <form action="Login" method="post" onsubmit="return validateForm()">
+            <input type="hidden" name="id" value="old">
+            
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" onblur="validateName()">
+            <div class="error" id="fullnameerror"></div>
+            
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" onblur="validatePassword()">
+            <div class="error" id="passworderror"></div>
+            
+            <button type="submit">Login</button>
+        </form>
     </div>
-  </form>
-
-
-
-
-
-
-
-
-
-
+    <div class="advertisement">
+      <marquee scrollamount="7" bgcolo="grey" direction="left" height="auto" width="auto" behavior="Scroll">
+        <p> 🔥 Get the best banking offers now! Limited time only.</p>
+      </marquee>
+   
+    </div>
+    <div class="rbi-rules">
+     <marquee scrollamount="7" bgcolo="grey" direction="left" height="auto" width="auto" behavior="Scroll">
+    ⚖️ RBI Rules: Never share your OTP or password with anyone.
+    </marquee>
+    </div>
 </body>
 </html>

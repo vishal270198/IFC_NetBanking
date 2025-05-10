@@ -5,6 +5,8 @@ package BlogicImplement;
 import ExceptionHandling.InvaliedAccNo;
 
 
+
+
 import ExceptionHandling.LowBalExcep;
 
 import Aspect.Object_Provider;
@@ -33,13 +35,20 @@ public class AccountServiceImple implements AccountService
 	
 	
 	
-  public int openAccount(String accType,double amount)
+  public int openAccount( String username,String password,String accType,double amount)
 {
-	acc=new Account(accType,amount);
+	  
+	acc=new Account(username,password,accType,amount);
+	
+	acc.setUsername(username);
+	acc.setPassword(password);
 	acc.setAccBal(amount);
 	acc.setAccType(accType);
 	
+	System.out.println("dao.accountInsertdata" +acc);
 	dao.accountInsertdata(acc);
+	
+	System.out.println("dao.accountInsertdata" +acc);
 	
 	return acc.getAccNo();
 	
@@ -47,75 +56,79 @@ public class AccountServiceImple implements AccountService
 	
   
   
-  
-  
-  
-  public void deposit(int accNo,double amount) throws InvaliedAccNo 
- 	{
- 	  double bal;
- 	  
- 		if(acc.getAccNo()!=accNo)
- 		{
- 			  throw  new InvaliedAccNo("Invalid Account");
- 		 }
- 		   else
- 		   {
- 			   bal=acc.getAccBal()+amount;
- 				
- 			  acc.setAccBal(bal);
- 				
- 				assert(acc.getAccBal()<bal):"amount deposit is failed";
- 				
- 				
- 				
- 				  System.out.println("\n Balance After Deposit ="+bal);
- 		   }
+  public double deposit(int accNo, double amount) throws InvaliedAccNo {
+	    // Retrieve the account from the database
+	    Account acc = dao.retriveData(accNo);
+	    if (acc == null) {
+	        throw new InvaliedAccNo("Invalid Account Number");
+	    }
+
+	    // Perform the deposit operation
+	    double newBalance = acc.getAccBal() + amount; // Update the balance
+
+	    // Set the new balance
+	    acc.setAccBal(newBalance);
+
+	    // Update the database with the new balance
+	    int updateCount = dao.updateAccData(acc);
+	    if (updateCount <= 0) {
+	        throw new RuntimeException("Failed to update account balance in the database.");
+	    }
+
+	    return newBalance;
+	}
+
+
  	
+   
+   
+   
+  
+  
+   
+   public double withdrawalMoney(int accNo,double amount) throws LowBalExcep
+ 	{
+ 		
+	   Account acc = dao.retriveData(accNo); // Get account details
+
+	  
+	    if (acc.getAccBal() < amount) {
+	        throw new LowBalExcep("Insufficient balance.");
+	    }
+
+	    // Deduct the amount from the current balance
+	    double newBalance = acc.getAccBal() - amount;
+	    acc.setAccBal(newBalance); // Update the account object with the new balance
+
+	    // Update the account in the database with the new balance
+	    int updateCount = dao.updateAccData(acc);
+
+	    if (updateCount > 0) {
+	        System.out.println("Withdrawal successful, new balance: " + newBalance);
+	    } else {
+	        System.out.println("Withdrawal failed.");
+	        throw new RuntimeException("Failed to withdraw money.");
+	    }
+
+	    return newBalance; // Return the updated balance
  	}
  	
    
    
    
-  
-  
    
-   public void withdrawalMoney(int accNo,double amount) throws LowBalExcep
+   
+   public double balanceEnquiry(int accNo) throws InvaliedAccNo
  	{
- 		
- 	  double bal;
- 		
- 		if(acc.getAccNo()!=accNo)
- 		{
- 			  throw new LowBalExcep("Invalid Account");
- 		}
- 		   else
- 		   {
- 			   bal=acc.getAccBal()-amount;
- 				
- 			  acc.setAccBal(bal);
- 				
- 				
- 				
- 				  System.out.println("\n Balance After Widroal Monay ="+bal);
- 		   }
- 	}
- 	
-   
-   
-   
-   
-   
-   public void balanceEnquiry(int accNo) throws InvaliedAccNo
- 	{
+	   Account acc=dao.retriveData(accNo);
+	   
  	  if( acc.getAccNo()!=accNo)
  	   {
  		  throw new InvaliedAccNo("Invalid Account");
  	   }
  	   else
  	   {
- 		   System.out.println("\n Your request is accepted.Please wait for some time....");
- 		   
- 			  System.out.println("\n Your Current Balance = " +  acc.getAccBal()+ "\n Thank You .Visit Again....");
+ 		 return acc.getAccBal();
  	   }
  	}
   
@@ -123,49 +136,65 @@ public class AccountServiceImple implements AccountService
   
    
    
-  public void moneyTransfers(int accNo,double amount)
-	{
-		double balance;
+  public double moneyTransfers(int senderAccNo, int receiverAccNo, double amount) throws InvaliedAccNo, LowBalExcep 
+  {
+	    // Retrieve sender and receiver accounts
 	  
-	  if( acc.getAccNo()==accNo)
-	 {  
-//		 System.out.println("\n Enter your amount");
-		   
-		 balance=acc.getAccBal()-amount;
-		         
-		 assert(balance==acc.getAccBal()):"Money Transfer is fail";
-		         
-		   acc.setAccBal(balance);
-	 }
+	    Account senderAcc = dao.retriveData(senderAccNo);
+	    Account receiverAcc = dao.retriveData(receiverAccNo);
 
-	   else 
-	   {
-		   System.out.println("Account Is Not Valid.Please Check Again.....");
-       }	   
+	    
+	    // Check if both accounts exist
+	    if (senderAcc == null || receiverAcc == null) {
+	        throw new InvaliedAccNo("Invalid account number.");
+	    }
+
+	    
+	    // Check if the sender has sufficient balance
+	    if (senderAcc.getAccBal() < amount) {
+	        throw new LowBalExcep("Insufficient balance.");
+	    }
+
+	    
+	    // Deduct the amount from sender's account
+	    double senderNewBalance = senderAcc.getAccBal() - amount;
+	    senderAcc.setAccBal(senderNewBalance);
+
+	    
+	    // Add the amount to receiver's account
+	    double receiverNewBalance = receiverAcc.getAccBal() + amount;
+	    receiverAcc.setAccBal(receiverNewBalance);
+
+	    
+	    // Update the accounts in the database
+	    int senderUpdateCount = dao.updateAccData(senderAcc);
+	    int receiverUpdateCount = dao.updateAccData(receiverAcc);
+
+	    
+	    if (senderUpdateCount > 0 && receiverUpdateCount > 0) 
+	    {
+	        System.out.println("Money transfer successful.");
+	    } 
+	    else 
+	    {
+	        throw new RuntimeException("Money transfer failed.");
+	    }
+
+	    return senderNewBalance; // Return the new balance of the sender's account
   
-	  
-	}
+  }
 	
   
-  public void printaccDetails(int accNo)
+  public Account printaccDetails(int accNo) throws InvaliedAccNo
 	{
 		
-	  if(acc.getAccNo()==accNo)
-	  {
-		  
-		  System.out.println("\n Your request is accepted.Please wait for some time....");
-		   
-		  System.out.println("\n Account number:" +acc.getAccNo());
-		  
-		  System.out.println("\n Account Type:" +acc.getAccType());
-		  
-		  System.out.println("\n  Account Balance:" +acc.getAccBal());	  
-	  }
-	  
-	  else
-	   {
-		   System.out.println("Account Is Not Valid.Please Check Again.....");
-	   }
+	  Account acc = dao.retriveData(accNo);  // Fetch the account details from the database
+
+	    if (acc == null) {
+	        throw new InvaliedAccNo("Account number not found.");
+	    }
+
+	    return acc;  // Return the account details
 	 	  
 	}
 	
@@ -197,6 +226,10 @@ public class AccountServiceImple implements AccountService
 	        System.out.println("Account with the provided number not found.");
 	    }
 	}
+
+
+
+
 }
 	  
 

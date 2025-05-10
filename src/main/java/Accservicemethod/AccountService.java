@@ -1,22 +1,23 @@
 package Accservicemethod;
 
+import Client.Account;
 import ExceptionHandling.InvaliedAccNo;
 import ExceptionHandling.LowBalExcep;
 
 
 public interface AccountService 
 {
-    int openAccount(String accType,double amount);
+    int openAccount(String username,String password,String accType,double amount);
 	
-	void deposit(int accNo,double amount) throws InvaliedAccNo;
+	double deposit(int accNo,double amount) throws InvaliedAccNo;
 	
-	void withdrawalMoney(int accNo,double amount)throws LowBalExcep;
+	double withdrawalMoney(int accNo,double amount)throws LowBalExcep;
 	
-	void balanceEnquiry(int accNo) throws InvaliedAccNo;
+	double balanceEnquiry(int accNo) throws InvaliedAccNo;
 	
-	void moneyTransfers(int accNo,double amount);
+	double moneyTransfers(int senderAccNo, int receiverAccNo, double amount) throws InvaliedAccNo, LowBalExcep;
 	
-    void printaccDetails(int accNo);
+    Account printaccDetails(int accNo) throws InvaliedAccNo;
     
     void closeAccount(int accNo);
 	

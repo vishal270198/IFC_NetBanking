@@ -9,154 +9,216 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
+     background-color: #F5FFFA;
+      margin: 0;
+      padding: 0;
     }
 
-    /* Box container */
     .box {
       background-color: #003b5c;
       color: white;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      height: 100px; /* Reduced the height */
-      width: 100%;
-      margin: 0 auto; /* Center the box */
-      border-radius: 10px;
+      height: 100px;
+      padding: 0 20px;
     }
 
     .box .logo img {
-      width: 110px;
-      height: 100%;
+      height: 100px;
+      width: auto;
     }
 
     .box h1 {
       text-align: center;
-      font-size: 16px;
+      font-size: 20px;
       flex-grow: 1;
-      color: red;
+      color: #ffcc00;
       font-weight: bolder;
     }
 
-    /* Date and Time display */
     .datetime {
       font-size: 14px;
-      color: rgb(236, 233, 17);
-      margin-right: 10px;
+      color: #fff89c;
+      margin-left: 10px;
     }
 
-    /* Buttons in the center */
     .box .buttons {
       display: flex;
-      gap: 20px;
+      gap: 15px;
     }
 
     .box .buttons button {
-      padding: 10px 10px;
-      border: 1px brown;
+      padding: 8px 16px;
       background-color: #ffcc00;
-      color: #09080c;
+      color: #003b5c;
+      border: none;
       border-radius: 5px;
       cursor: pointer;
-      display: flex;
-      align-items: center;
-    }
-
-    .box .buttons button i {
-      margin-right: 5px;
+      font-weight: bold;
     }
 
     .box .buttons button:hover {
-      background-color: #6fa7b8;
+      background-color: #f2a900;
     }
 
     .alert {
-      background-color: #99cccf;
-      width: 70%;
-      margin: auto;
-      margin-top: 5px;
-      border-radius: 5px;
+      background-color: #e0f7fa;
+      color: #003b5c;
       text-align: center;
-      color: black;
+      padding: 10px;
+      font-size: 16px;
+      font-weight: bold;
     }
 
-    .pr {
-      color: rgb(208, 11, 11);
-      border: 1px solid black;
-      border-radius: 15px;
-      background-color: darkgray;
+    .marquee-container {
+      background-color: #ffffff;
+      padding: 10px 0;
     }
 
-    main {
-      padding:5px;
+    .marquee-container marquee img {
+      margin-right: 30px;
+      height: 120px;
+      border-radius: 8px;
+    }
+
+    .notice {
+      margin: 10px auto;
+      width: 90%;
+      background-color: #d1ecf1;
+      color: #0c5460;
+      padding: 10px;
+      border-radius: 6px;
       text-align: center;
-     
+      font-size: 14px;
     }
 
-    .pm{
-      border: 3px solid rgb(119, 214, 132);
-      border-radius: 20px;
+    /* Our Services */
+    .services-section {
+      background-color: #ffffff;
+      padding: 40px 10%;
+      text-align: center;
     }
 
+    .services-section h2 {
+      color: #003b5c;
+      margin-bottom: 30px;
+    }
 
+    .service-grid {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      gap: 30px;
+    }
 
+    .service-item {
+      flex: 1;
+      min-width: 200px;
+    }
 
+    .service-item img {
+      width: 80px;
+      margin-bottom: 10px;
+    }
+
+    .service-item h3 {
+      color: #32CD32;
+      font-size: 18px;
+    }
+
+    .service-item p {
+      font-size: 14px;
+      color: #555;
+    }
+
+    footer {
+      text-align: center;
+      padding: 15px;
+      background-color: #003b5c;
+      color: #fff;
+      font-size: 14px;
+      position: relative;
+      bottom: 0;
+      width: 100%;
+    }
   </style>
 </head>
 <body>
 
-  <!-- Box with logo and buttons -->
+  <!-- Header -->
   <div class="box">
     <div class="logo">
       <img src="https://www.shutterstock.com/image-vector/indian-farmer-cutting-grass-illustration-260nw-2320322657.jpg" alt="IFC Logo">
     </div>
-    <h1>INDIAN FARMERS CO_OPERATIVE BANK</h1>
+    <h1>INDIAN FARMERS CO-OPERATIVE BANK</h1>
     <div class="datetime" id="datetime"></div>
     <div class="buttons">
-      <a href="Login.jsp"><button><i class="fa fa-sign-in"></i> LOGIN</button></a>
-      <a href="signup.jsp"><button><i class="fa fa-user-plus"></i> SIGNUP</button></a>
+      <a href="Login.jsp"><button>LOGIN</button></a>
+      <a href="signup.jsp"><button>SIGNUP</button></a>
     </div>
   </div>
 
-  <!-- Alert box -->
-  <div class="alert">
-    <p>Relationship Beyond Banking</p>
+  <!-- Tagline -->
+  <div class="alert">"Relationship Beyond Banking" – Trusted by Every Farmer</div>
+
+  <!-- Advertisement Marquee -->
+  <div class="marquee-container">
+    <marquee scrollamount="8" direction="left">
+      <img src="https://www.vajiraoinstitute.com/images/blogs/pradhan-mantri-annadata-aay/pradhan-mantri-annadata-aay.webp" alt="Scheme 1">
+      <img src="https://www.rajstartup.com/productImage/PM%20Kisan%20Samman%20Nidhi%20Yojana.jpg" alt="Scheme 2">
+      <img src="https://www.ksgindia.com/images/blog/200801-Garib_kalyan_yojana_IMAGE.png" alt="Scheme 3">
+      <img src="https://modiyojna.org/wp-content/uploads/2024/12/LIC-Bima-Sakhi-Yojana.webp" alt="Scheme 4">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0ev732bNTFzoUu7uEPg9d2eq5CFTtXd1GnQ&s" alt="MyGov India">
+    </marquee>
   </div>
 
-  <!-- Main content -->
-  <main>
-    <section class="intro">
+  <!-- Notice Marquee -->
+  <div class="notice">
+    <marquee scrollamount="6" direction="left">
+      📢 RBI Update: Banks may only use 1600-series phone numbers for verified transaction calls. Cardholders are advised to pay more than the minimum due to avoid long-term interest.
+    </marquee>
+  </div>
 
-      <div class="pm">
-      <marquee scrollamount="7" bgcolo="grey" direction="left" height="140px" width="140%" behavior="Scroll">
-        <img src="https://www.vajiraoinstitute.com/images/blogs/pradhan-mantri-annadata-aay/pradhan-mantri-annadata-aay.webp" width="400px" height="400px" alt="LIC Insta">
-        <img src="https://www.rajstartup.com/productImage/PM%20Kisan%20Samman%20Nidhi%20Yojana.jpg" width="400px" height="auto" alt="PM Jan Dhan Yojna">
-        <img src="https://www.ksgindia.com/images/blog/200801-Garib_kalyan_yojana_IMAGE.png" width="400px" height="auto" alt="PM Arogya Yojna">
-        <img src="https://modiyojna.org/wp-content/uploads/2024/12/LIC-Bima-Sakhi-Yojana.webp" width="400px" height="auto" alt="PM Kisan Bima Yojna">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0ev732bNTFzoUu7uEPg9d2eq5CFTtXd1GnQ&s" width="400px" height="auto" alt="MyGov India">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSxgz1JFqZ0R0Wewj88wehi__9h84ua2GvzQ&s" width="400px" height="auto" alt="India Government Portal">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRxp-B5ZxVYHNAEtjO90S9qyWlua7crFPOocQ&s" width="400px" height="auto" alt="NREGA">
-      </marquee>
+  <!-- Our Services Section -->
+  <section class="services-section">
+    <h2>Our Services</h2>
+    <div class="service-grid">
+      <div class="service-item">
+        <img src="https://cdn-icons-png.flaticon.com/512/2989/2989988.png" alt="Open Account">
+        <h3>Open Account</h3>
+        <p>Quickly open savings, current or fixed deposit accounts online.</p>
+      </div>
+      <div class="service-item">
+        <img src="https://cdn-icons-png.flaticon.com/512/6333/6333999.png" alt="Loan Services">
+        <h3>Loan Services</h3>
+        <p>Access farmer loans, personal loans, and MSME credit facilities.</p>
+      </div>
+      <div class="service-item">
+        <img src="https://cdn-icons-png.flaticon.com/512/2910/2910793.png" alt="Mobile Banking">
+        <h3>Mobile Banking</h3>
+        <p>Bank safely anytime, anywhere with our mobile app and SMS banking.</p>
+      </div>
+      <div class="service-item">
+        <img src="https://cdn-icons-png.flaticon.com/512/3063/3063827.png" alt="Fund Transfer">
+        <h3>Fund Transfer</h3>
+        <p>Transfer funds seamlessly across banks with NEFT, RTGS & IMPS.</p>
+      </div>
     </div>
+  </section>
 
-    <div class="pr">
-      <marquee scrollamount="7" bgcolo="grey" direction="left" height="auto" width="auto" behavior="Scroll">
-        <p>According to the RBI's latest directive, banks are now only permitted to use phone numbers that start with 1600 for all transaction-related calls. It informs cardholders that making only the minimum payment each month will result in a higher amount of total interest paid and a longer repayment period.</p>
-      </marquee>
-    </div>
-    </section>
-  </main>
+  <!-- Footer -->
+  <footer>
+    &copy; 2025 IFC NetBank. A Government-Recognized Farmers Cooperative Banking Institution.
+  </footer>
 
   <script>
-    // Function to update the date and time
     function updateDateTime() {
       const now = new Date();
-      const dateTime = now.toLocaleString(); // Formats date and time
-      document.getElementById('datetime').textContent = dateTime;
+      document.getElementById('datetime').textContent = now.toLocaleString();
     }
-
-    // Update the date and time every second
     setInterval(updateDateTime, 1000);
   </script>
+
 </body>
 </html>

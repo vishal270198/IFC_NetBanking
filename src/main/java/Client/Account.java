@@ -3,36 +3,64 @@ package Client;
 public class Account 
 {
 	
-	
+	  public String username;
+	  public String password;
 	  public int accNo;
-	  public String acctType;
+	  public String accType;
       public double accBal;
 	  public static int series=123321;
+	
+	  
 	  
 	  
 	  public Account()
 	  {
-		  this.acctType="not given";
+		  this.username="not given";
+		  this.password="not given";
+		  this.accType="not given";
 		  this.accBal=00;
 		  this.accNo=series;
 	  }
 	
 	
-	  public Account(String accType,double accBal)
+	  public Account(String username,String password,String accType,double accBal)
 	  {
+		  this.username=username;
+		  this.password=password;
 		  this.accNo=series;
 		  series++;
-		  this.acctType=accType;
+		  this.accType=accType;
 		  this.accBal=accBal;
+		
 	  }
 	
 	  
 	
 	  
 	  
-	   public void setAccType(String acctType)
+	   public String getUsername() {
+		return username;
+	}
+
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+
+	public String getPassword() {
+		return password;
+	}
+
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+
+	public void setAccType(String accType)
 	   {
-		   this.acctType=acctType;
+		   this.accType=accType;
 	   }
 	   
 	   
@@ -54,7 +82,7 @@ public class Account
 	   
 	   public String getAccType()
 	   {
-		  return acctType;
+		  return accType;
 	   }
 	   
 	   

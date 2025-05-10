@@ -26,35 +26,52 @@ public class AccountDaoImp implements AccountDaoInterface
 	 ResultSet rs;
 	
 	
+	
 	 public void setConnection(Connection con)
 	 {
+		 System.out.println("inside set connection...");
 		 this.con=con;
 	 }
 	 
 	 
 	 
 	 
-	public int accountInsertdata(Account acc)                             //create new account
-	{
-		 int updatecount=0;
-		
-		try {
-			
-			
-			  prs=con.prepareStatement("insert into baccount values(?,?,?)");
-			      
-			    prs.setInt(1,acc.getAccNo());
-			    prs.setString(2,acc.getAccType());
-			    prs.setDouble(3,acc.getAccBal() );
-			    
-			     updatecount=prs.executeUpdate();
-		} 
-		catch (SQLException e) 
-		{
-			e.printStackTrace();
+	 public int accountInsertdata(Account acc) {  
+		    int updateCount = 0;  
+
+		    System.out.println("Inside accountInsertdata...");  
+
+		    try {  
+		        if (con == null) {  
+		            System.out.println("Database connection is NULL!");  
+		            return 0;  
+		        }  
+
+		        String query = "INSERT INTO baccount (username, password, accNo, accType, accBal) VALUES (?, ?, ?, ?, ?)";  
+		        prs = con.prepareStatement(query);  
+
+		        // Setting values in the prepared statement  
+		        prs.setString(1, acc.getUsername());  
+		        prs.setString(2, acc.getPassword());  
+		        prs.setInt(3, acc.getAccNo());  
+		        prs.setString(4, acc.getAccType());  
+		        prs.setDouble(5, acc.getAccBal());  
+
+		        updateCount = prs.executeUpdate();  
+
+		        if (updateCount > 0) {  
+		            System.out.println("Data successfully inserted into the database!");  
+		        } else {  
+		            System.out.println("Data insertion failed!");  
+		        }  
+
+		    } catch (SQLException e) {  
+		        System.out.println("SQL Exception: " + e.getMessage());  
+		        e.printStackTrace();  
+		    }  
+
+		    return updateCount;  
 		}
-		return updatecount;
-	}
 	
 	
 	
@@ -75,11 +92,15 @@ public class AccountDaoImp implements AccountDaoInterface
 			
 			if(rs.next())   //result set which is hoild result of account
 			{
-			int no=rs.getInt(1);
-			String Type=rs.getString(2);
-			double bal=rs.getDouble(3);
+		
+				String username=rs.getString(1);
+				String password=rs.getString(2);
+			    int no=rs.getInt(3);
+			    String Type=rs.getString(4);
+			    double bal=rs.getDouble(5);
+		
 			
-			acc=new Account(Type,bal);
+			acc=new Account(username,password,Type,bal);
 			
 			acc.setAccNo(accNo);		
 			}
@@ -114,11 +135,14 @@ public class AccountDaoImp implements AccountDaoInterface
 			
 			rs.next();                                         //result set which is hoild result of account
 			
-			int no=rs.getInt(1);
-			String Type=rs.getString(2);
-			double bal=rs.getDouble(3);
-				
-			acc=new Account(Type,bal);
+			String username=rs.getString(1);
+			String password=rs.getString(2);
+		    int no=rs.getInt(3);
+		    String Type=rs.getString(4);
+		    double bal=rs.getDouble(5);
+			
+			
+			acc=new Account(username,password,Type,bal);
 			
 			acc.setAccBal(bal);
 			
@@ -172,8 +196,28 @@ public class AccountDaoImp implements AccountDaoInterface
 
 
 
-
 	
+	public boolean verifyUser(String username, String password) {
+	    boolean isValid = false;
+	    
+	    try {
+	        String query = "SELECT * FROM baccount WHERE username=? AND password=?";
+	        prs = con.prepareStatement(query);
+	        prs.setString(1, username);
+	        prs.setString(2, password);
+	        
+	        rs = prs.executeQuery();
+	        
+	        if (rs.next()) {  
+	            isValid = true;
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    
+	    return isValid;
+	}
+
 	}
 
 	

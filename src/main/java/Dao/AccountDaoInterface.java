@@ -17,4 +17,6 @@ public interface AccountDaoInterface
 
 	public void deleteAccount(int accNo);
 	
+	public boolean verifyUser(String username, String password);
+	
 }
